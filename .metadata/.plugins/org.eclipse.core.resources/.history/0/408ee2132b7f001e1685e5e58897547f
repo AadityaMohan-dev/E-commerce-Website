@@ -1,0 +1,15 @@
+package com.ecommerce.website.controller;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ecommerce.website.entity.Role;
+
+@RestController
+public class RoleController {
+	
+	@PostMapping({"/createNewRole"})
+	public Role createNewRole(Role role) {
+		
+	}
+}

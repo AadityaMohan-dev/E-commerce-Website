@@ -1,0 +1,13 @@
+package com.ecommerce.website.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ecommerce.website.entity.User;
+
+@RestController
+public class UserController {
+
+	public User registrNewUser(User user) {
+		return null;
+	}
+}
