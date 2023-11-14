@@ -1,5 +1,0 @@
-package com.ecommerce.website.configuration;
-
-public class JwtAuthenticationEntryPoint {
-
-}

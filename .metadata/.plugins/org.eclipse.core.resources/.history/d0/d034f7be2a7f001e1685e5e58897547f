@@ -1,5 +1,0 @@
-package com.ecommerce.website.dao;
-
-public interface RoleDao {
-
-}
