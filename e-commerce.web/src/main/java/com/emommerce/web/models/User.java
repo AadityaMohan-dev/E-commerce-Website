@@ -1,6 +1,6 @@
 package com.emommerce.web.models;
 
-import com.emommerce.web.enums.Roles;
+// import com.emommerce.web.enums.Roles;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,5 +21,5 @@ public class User {
     private Long id;
     private String username;
     private String password;
-    private Roles role;
+    private String role;
 }
