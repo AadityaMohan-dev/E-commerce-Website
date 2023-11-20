@@ -1,11 +1,16 @@
 package com.emommerce.web.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.emommerce.web.dto.ReqAdminDto;
+import com.emommerce.web.dto.ResAdminDto;
 import com.emommerce.web.models.Admin;
 import com.emommerce.web.models.User;
 import com.emommerce.web.repo.AdminRepo;
@@ -40,4 +45,18 @@ public class AdminService {
 		
 		return ResponseEntity.status(HttpStatus.OK).body("Admin Added Sucessfully");
 	}
+
+   
+    public ResponseEntity<Object> getAdminByUserName(ResAdminDto resAdminDto, String username) {
+        Optional<Admin> optional = adminRepository.findByUserName(username);
+        if(optional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
+        }
+        Admin admin = optional.get();
+        resAdminDto.setAdminAddress(admin.getAdminAddress());
+        resAdminDto.setAdminName(admin.getAdminName());
+        resAdminDto.setAdminPhone(admin.getAdminPhone());
+        resAdminDto.setUsername(admin.getUser().getUsername());
+        return ResponseEntity.status(HttpStatus.OK).body(resAdminDto);
+    }
 }
