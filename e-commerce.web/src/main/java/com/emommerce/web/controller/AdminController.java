@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("api/admin")
 public class AdminController {
+
+
     @Autowired
 	private AdminService adminService;
 	
@@ -26,9 +28,14 @@ public class AdminController {
 		return adminService.addAdmin(rad);
 	}
 
-    @GetMapping("get/{username}")
-    public ResponseEntity<Object> getAdminByUserName(@RequestBody ResAdminDto resAdminDto,@PathVariable("username") String username) {
-        return adminService.getAdminByUserName(resAdminDto, username);
+    @GetMapping("user/{username}")
+    public ResponseEntity<Object> getAdminByUserName(@PathVariable("username") String username) {
+        return adminService.getAdminByUserName(username);
+    }
+
+    @GetMapping("userid/{id}")
+    public ResponseEntity<Object> getAdminById(@PathVariable("id") Long id){
+        return adminService.getAdminById(id);
     }
     
 }

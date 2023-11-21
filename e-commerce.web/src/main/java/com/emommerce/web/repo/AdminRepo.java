@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.emommerce.web.models.Admin;
 
 public interface AdminRepo extends JpaRepository<Admin,Long>{
-    @Query("select a from Admin a where a.user.username=?1")
+    @Query("select a from Admin a where a.user.username = ?1")
     Optional<Admin> findByUserName(String username);
     
 }

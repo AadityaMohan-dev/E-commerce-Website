@@ -47,7 +47,8 @@ public class AdminService {
 	}
 
    
-    public ResponseEntity<Object> getAdminByUserName(ResAdminDto resAdminDto, String username) {
+    public ResponseEntity<Object> getAdminByUserName(String username) {
+        ResAdminDto resAdminDto =new ResAdminDto();
         Optional<Admin> optional = adminRepository.findByUserName(username);
         if(optional.isEmpty()){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
@@ -57,6 +58,23 @@ public class AdminService {
         resAdminDto.setAdminName(admin.getAdminName());
         resAdminDto.setAdminPhone(admin.getAdminPhone());
         resAdminDto.setUsername(admin.getUser().getUsername());
+
+        return ResponseEntity.status(HttpStatus.OK).body(resAdminDto);
+    }
+
+
+    public ResponseEntity<Object> getAdminById(Long id) {
+        ResAdminDto resAdminDto =new ResAdminDto();
+        Optional<Admin> optional = adminRepository.findById(id);
+        if(optional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("userid not found");
+        }
+        Admin admin = optional.get();
+        resAdminDto.setAdminAddress(admin.getAdminAddress());
+        resAdminDto.setAdminName(admin.getAdminName());
+        resAdminDto.setAdminPhone(admin.getAdminPhone());
+        resAdminDto.setUsername(admin.getUser().getUsername());
+
         return ResponseEntity.status(HttpStatus.OK).body(resAdminDto);
     }
 }
