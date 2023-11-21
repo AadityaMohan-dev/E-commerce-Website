@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import com.emommerce.web.dto.ReqAdminDto;
 import com.emommerce.web.dto.ResAdminDto;
+import com.emommerce.web.enums.Status;
 import com.emommerce.web.models.Admin;
 import com.emommerce.web.models.User;
 import com.emommerce.web.repo.AdminRepo;
@@ -39,6 +37,7 @@ public class AdminService {
 		admin.setAdminName(rad.getAdminName());
         admin.setAdminAddress(rad.getAdminAddress());
         admin.setAdminPhone(rad.getAdminPhone());
+        admin.setActiveStatus(Status.ACTIVE);
 		admin.setUser(user);
 		
 		adminRepository.save(admin);
@@ -50,7 +49,7 @@ public class AdminService {
     public ResponseEntity<Object> getAdminByUserName(String username) {
         ResAdminDto resAdminDto =new ResAdminDto();
         Optional<Admin> optional = adminRepository.findByUserName(username);
-        if(optional.isEmpty()){
+        if(optional.isEmpty() && optional.get().getActiveStatus() == Status.ACTIVE){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
         }
         Admin admin = optional.get();
@@ -66,7 +65,7 @@ public class AdminService {
     public ResponseEntity<Object> getAdminById(Long id) {
         ResAdminDto resAdminDto =new ResAdminDto();
         Optional<Admin> optional = adminRepository.findById(id);
-        if(optional.isEmpty()){
+        if(optional.isEmpty() && optional.get().getActiveStatus() == Status.ACTIVE){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("userid not found");
         }
         Admin admin = optional.get();
@@ -76,5 +75,16 @@ public class AdminService {
         resAdminDto.setUsername(admin.getUser().getUsername());
 
         return ResponseEntity.status(HttpStatus.OK).body(resAdminDto);
+    }
+
+
+    public ResponseEntity<Object> delAdminById(Long id) {
+        Optional<Admin> optional = adminRepository.findById(id);
+        if(optional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user not found");
+        }
+        Admin admin = optional.get();
+        admin.setActiveStatus(Status.ARCHIVED);
+        return ResponseEntity.status(HttpStatus.OK).body("user deleted sucessfully");
     }
 }

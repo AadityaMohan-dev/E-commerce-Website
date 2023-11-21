@@ -1,6 +1,10 @@
 package com.emommerce.web.models;
 
+import com.emommerce.web.enums.Status;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,6 +24,8 @@ public class Admin {
     private String AdminName;
     private String AdminAddress;
     private String AdminPhone;
+    @Enumerated(EnumType.STRING)
+    private Status activeStatus;
     @OneToOne
     private User user;
 }

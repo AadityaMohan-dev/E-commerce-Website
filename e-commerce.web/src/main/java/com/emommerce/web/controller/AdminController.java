@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emommerce.web.dto.ReqAdminDto;
-import com.emommerce.web.dto.ResAdminDto;
 import com.emommerce.web.services.AdminService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -37,5 +38,9 @@ public class AdminController {
     public ResponseEntity<Object> getAdminById(@PathVariable("id") Long id){
         return adminService.getAdminById(id);
     }
-    
+
+    @DeleteMapping("user/del/{id}")
+    public ResponseEntity<Object> delAdminById(@PathVariable("id") Long id){
+        return adminService.delAdminById(id);
+    }
 }

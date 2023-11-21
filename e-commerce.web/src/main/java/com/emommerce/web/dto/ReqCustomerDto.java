@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResAdminDto {
-    private String AdminName;
-    private String AdminAddress;
-    private String AdminPhone;
+public class ReqCustomerDto {
+    private String customerName;
+    private String customerAddress;
+    private String customerPhone;
+    private Status customerStatus;
     private String username;
-    private Status activeStatus;
+    private String password;
 }
