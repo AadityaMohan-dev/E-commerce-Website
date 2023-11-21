@@ -1,11 +1,14 @@
 package com.emommerce.web.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.emommerce.web.dto.ReqCustomerDto;
+import com.emommerce.web.dto.ResCustomerDto;
 import com.emommerce.web.enums.Status;
 import com.emommerce.web.models.Customer;
 import com.emommerce.web.models.User;
@@ -38,6 +41,38 @@ public class CustomerService {
 
         customerRepository.save(customer);
         return ResponseEntity.status(HttpStatus.OK).body("Customer Added Sucessfully");
+    }
+
+    public ResponseEntity<Object> getCustomerById(Long id) {
+        ResCustomerDto resCustomerDto = new ResCustomerDto();
+        Optional<Customer> optional = customerRepository.findById(id);
+        if (optional.isEmpty() && optional.get().getCustomerStatus() == Status.ACTIVE) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("userid not found");
+        }
+        Customer customer = optional.get();
+        resCustomerDto.setCustomerAddress(customer.getCustomerAddress());
+        resCustomerDto.setCustomerName(customer.getCustomerName());
+        resCustomerDto.setCustomerPhone(customer.getCustomerPhone());
+        resCustomerDto.setCustomerStatus(customer.getCustomerStatus());
+        resCustomerDto.setUsername(customer.getUser().getUsername());
+        
+        return  ResponseEntity.status(HttpStatus.OK).body(resCustomerDto);
+    }
+
+    public ResponseEntity<Object> getCustomerByUsername(String username) {
+        ResCustomerDto resCustomerDto = new ResCustomerDto();
+        Optional<Customer> optional = customerRepository.findByUserName(username);
+        if (optional.isEmpty() && optional.get().getCustomerStatus() == Status.ACTIVE) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
+        }
+        Customer customer = optional.get();
+        resCustomerDto.setCustomerAddress(customer.getCustomerAddress());
+        resCustomerDto.setCustomerName(customer.getCustomerName());
+        resCustomerDto.setCustomerPhone(customer.getCustomerPhone());
+        resCustomerDto.setCustomerStatus(customer.getCustomerStatus());
+        resCustomerDto.setUsername(customer.getUser().getUsername());
+        
+        return  ResponseEntity.status(HttpStatus.OK).body(resCustomerDto);
     }
 
 }
