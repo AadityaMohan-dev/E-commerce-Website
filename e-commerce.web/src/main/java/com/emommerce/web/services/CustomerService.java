@@ -19,11 +19,12 @@ public class CustomerService {
 	private UserRepo userRepository;
     @Autowired
     private CustomerRepo customerRepository;
+
     public ResponseEntity<Object> addCustomer(ReqCustomerDto rcd) {
         User user = new User();
         user.setUsername(rcd.getUsername());
 		user.setPassword(rcd.getPassword());
-		user.setRole("ADMIN");
+		user.setRole("CUSTOMER");
 		// String encodePassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(user.getPassword());
 		user = userRepository.save(user);
