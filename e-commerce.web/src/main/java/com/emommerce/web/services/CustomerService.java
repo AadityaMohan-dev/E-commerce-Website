@@ -75,4 +75,32 @@ public class CustomerService {
         return  ResponseEntity.status(HttpStatus.OK).body(resCustomerDto);
     }
 
+    public ResponseEntity<Object> delCustomerByUsername(String username) {
+        ResCustomerDto resCustomerDto = new ResCustomerDto();
+        Optional<Customer> optional = customerRepository.findByUserName(username);
+        if (optional.isEmpty() && optional.get().getCustomerStatus() == Status.ARCHIVED || optional.get().getCustomerStatus() == Status.REMOVED) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
+        }
+        resCustomerDto.setCustomerStatus(Status.ARCHIVED);
+        return ResponseEntity.status(HttpStatus.OK).body("user removed sucessfully");
+    }
+
+    public ResponseEntity<Object> delCustomerById(Long id) {
+        ResCustomerDto resCustomerDto = new ResCustomerDto();
+        Optional<Customer> optional = customerRepository.findById(id);
+        if (optional.isEmpty() && optional.get().getCustomerStatus() == Status.ARCHIVED || optional.get().getCustomerStatus() == Status.REMOVED) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
+        }
+        resCustomerDto.setCustomerStatus(Status.ARCHIVED);
+        return ResponseEntity.status(HttpStatus.OK).body("user removed sucessfully");
+    }
+
+    public ResponseEntity<Object> updateCustomerDetailsByUsername(String username) {
+        return null;
+    }
+
+    public ResponseEntity<Object> updateCustomerDetailsById(Long id) {
+        return null;
+    }
+
 }
